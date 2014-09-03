@@ -20,6 +20,12 @@ function default_content_drush_command() {
     ],
     'required-arguments' => 2,
   ];
+  $items['default-content-import'] = [
+    'description' => dt('Imports all default content available'),
+    'bootstrap' => DRUSH_BOOTSTRAP_DRUPAL_FULL,
+    'core' => array('8+'),
+    'aliases' => array('dcoi'),
+  ];
 
   return $items;
 }
@@ -46,4 +52,19 @@ function drush_default_content_export($entity_type_id, $entity_id) {
   else {
     drush_print($export);
   }
+}
+
+/**
+ * Imports all the content provided by modules.
+ *
+ * @return string
+ *   Success message
+ */
+function drush_default_content_import() {
+  $modules = \Drupal::moduleHandler()->getModuleList();
+  foreach ($modules as $module_name => $module) {
+    \Drupal::service('default_content.manager')->importContent($module_name);
+  }
+
+  drush_print('Content imported');
 }
