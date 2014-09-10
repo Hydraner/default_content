@@ -33,6 +33,13 @@ function default_content_drush_command() {
     'aliases' => array('dcer'),
     'required-arguments' => 2,
   ];
+  $items['default-content-import'] = [
+    'description' => dt('Imports all default content available'),
+    'bootstrap' => DRUSH_BOOTSTRAP_DRUPAL_FULL,
+    'core' => array('8+'),
+    'aliases' => array('dcoi'),
+  ];
+
 
   return $items;
 }
